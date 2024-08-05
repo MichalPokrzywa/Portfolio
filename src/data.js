@@ -33,8 +33,10 @@ export const projects = [
     },
   ];
 
-  export const skill = [
-    "dasd",
-    "sdasda",
-    "asdasd"
-  ]
+  export const skills = [
+    'JavaScript',
+    'React',
+    'Node.js',
+    'CSS',
+    'HTML',
+  ];
