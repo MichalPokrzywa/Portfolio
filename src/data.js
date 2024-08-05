@@ -32,3 +32,9 @@ export const projects = [
       link: "https://pythonbootcamp.com",
     },
   ];
+
+  export const skill = [
+    "dasd",
+    "sdasda",
+    "asdasd"
+  ]
