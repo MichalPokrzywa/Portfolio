@@ -13,12 +13,12 @@ export default function App() {
     <Router>
       <Navbar />
       <Routes className="text-gray-400 bg-gray-900 body-font">
-        <Route path="Portfolio/" element={<Home />} />
-        <Route path="Portfolio/about" element={<About />} />
-        <Route path="Portfolio/projects" element={<Projects />} />
-        <Route path="Portfolio/skills" element={<Skills />} />
-        <Route path="Portfolio/testimonials" element={<Testimonials />} />
-        <Route path="Portfolio/contact" element={<Contact />} />
+        <Route path="/Portfolio/" element={<Home />} />
+        <Route path="/Portfolio/about" element={<About />} />
+        <Route path="/Portfolio/projects" element={<Projects />} />
+        <Route path="/Portfolio/skills" element={<Skills />} />
+        <Route path="/Portfolio/testimonials" element={<Testimonials />} />
+        <Route path="/Portfolio/contact" element={<Contact />} />
       </Routes>
     </Router>
   );
