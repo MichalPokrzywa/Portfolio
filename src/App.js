@@ -12,7 +12,7 @@ export default function App() {
   return (
     <Router>
       <Navbar />
-      <Routes className="text-gray-400 bg-gray-900 body-font">
+      <Routes>
         <Route path="/Portfolio/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
