@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FaGithub,FaLinkedin } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
-
+const CAPTCHA_KEY = process.env.REACT_APP_GOOGLE_RECAPTCHA_API_KEY;
 const contactLinks = [
   {
     id: 'email',
@@ -111,7 +111,7 @@ export default function Contact() {
           </label>
           <div style={{ margin: '8px 0px 8px' }}>
             <ReCAPTCHA
-              sitekey="6LfUdicsAAAAAOJYr1T_xXAzDCv7oNYp5m1WhmOy"
+              sitekey={CAPTCHA_KEY}
               onChange={(val) => {
                 setCapVal(val);
                 setCaptchaError('');
