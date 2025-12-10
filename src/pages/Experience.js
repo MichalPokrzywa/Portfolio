@@ -1,7 +1,7 @@
 // src/pages/Experience.js
 import React from 'react';
 
-const cvUrl = `${process.env.PUBLIC_URL}/docs/cv(7).pdf`;
+const cvUrl = `${process.env.PUBLIC_URL}/docs/CvEnglish.pdf`;
 
 export default function Experience() {
   return (

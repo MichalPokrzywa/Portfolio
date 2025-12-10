@@ -44,9 +44,6 @@ export default function Navbar() {
           <NavLink to="/projects" className="navbar__link" onClick={handleLinkClick}>
             Projects
           </NavLink>
-          <NavLink to="/skills" className="navbar__link" onClick={handleLinkClick}>
-            Skills
-          </NavLink>
           <NavLink to="/experience" className="navbar__link" onClick={handleLinkClick}>
             Experience
           </NavLink>

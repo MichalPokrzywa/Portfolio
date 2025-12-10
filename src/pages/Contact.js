@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FaGithub,FaLinkedin } from 'react-icons/fa';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const contactLinks = [
   {
@@ -31,9 +32,20 @@ const contactLinks = [
 export default function Contact() {
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [capVal, setCapVal] = useState(null);
+  const [captchaError, setCaptchaError] = useState('');
+  //6LfUdicsAAAAAOJYr1T_xXAzDCv7oNYp5m1WhmOy
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!capVal) {
+      setCaptchaError('Please confirm you are not a robot.');
+      return;
+    }
+
+    setCaptchaError('');
+
 
     setStatus('sending');
 
@@ -49,6 +61,7 @@ export default function Contact() {
         if (formRef.current) {
           formRef.current.reset();
         }
+        setCapVal(null);
       })
       .catch((error) => {
         console.error('EmailJS error:', error);
@@ -96,11 +109,24 @@ export default function Contact() {
               required
             />
           </label>
-
+          <div style={{ margin: '8px 0px 8px' }}>
+            <ReCAPTCHA
+              sitekey="6LfUdicsAAAAAOJYr1T_xXAzDCv7oNYp5m1WhmOy"
+              onChange={(val) => {
+                setCapVal(val);
+                setCaptchaError('');
+              }}
+            />
+            {captchaError && (
+              <p style={{ marginTop: '6px', color: '#f97373', fontSize: '0.85rem' }}>
+                {captchaError}
+              </p>
+            )}
+          </div>
           <button
             type="submit"
             className="btn btn--primary btn--full"
-            disabled={status === 'sending'}
+            disabled={status === 'sending' || !capVal}
           >
             {status === 'sending' ? 'Sending...' : 'Send Message'}
           </button>

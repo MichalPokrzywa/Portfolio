@@ -63,7 +63,7 @@ const projects = [
       `${process.env.PUBLIC_URL}/img/glitchreboot4.png`,
     ],
     youtubeIds: [], // PODMIEŃ na ID swojego filmiku z YouTube
-    videoSrcs: ['https://github.com/user-attachments/assets/a002c74d-41ca-49b2-9a2c-194af807778e', `${process.env.PUBLIC_URL}/videos/GlitchRebootDemo.mkv`], // PODMIEŃ na swoją ścieżkę lub usuń
+    videoSrcs: ['https://github.com/user-attachments/assets/a002c74d-41ca-49b2-9a2c-194af807778e', `${process.env.PUBLIC_URL}/videos/GlitchRebootDemo.mp4`], // PODMIEŃ na swoją ścieżkę lub usuń
     pdfSrc: ``,
     githubUrl: 'https://github.com/MichalPokrzywa/GlitchReboot',
     liveUrl: '',
