@@ -27,12 +27,13 @@ const contactLinks = [
     external: true,
   },
 ];
-
+  const siteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 export default function Contact() {
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [capVal, setCapVal] = useState(null);
   const [captchaError, setCaptchaError] = useState('');
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -109,7 +110,7 @@ export default function Contact() {
           </label>
           <div style={{ margin: '8px 0px 8px' }}>
             <ReCAPTCHA
-              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+              sitekey={siteKey}
               onChange={(val) => {
                 setCapVal(val);
                 setCaptchaError('');
