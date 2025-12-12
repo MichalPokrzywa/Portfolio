@@ -95,7 +95,7 @@ export default function Home() {
       <section className="section home-skills">
         <div className="skills-section fade-in">
           <h2 className="skills-section__title">
-            <span className="skills-section__muted">Professional</span>{' '}
+            <span className="skills-section__muted">My</span>{' '}
             <span className="skills-section__accent">Skillset</span>
           </h2>
 
