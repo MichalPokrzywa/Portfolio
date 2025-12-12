@@ -16,7 +16,7 @@ export default function App() {
   return (
     <>
       <ShaderBackground />
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="app-root">
           <Navbar />
           <main className="page-container">
