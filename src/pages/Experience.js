@@ -36,7 +36,6 @@ const monthIndex = (ym) => {
 export default function Experience() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [pinnedId, setPinnedId] = useState(null);
-  const [hoverId, setHoverId] = useState(null);
   const [progress, setProgress] = useState(0);
   const bodyRef = useRef(null);
 
@@ -141,10 +140,10 @@ export default function Experience() {
   const selectCategory = (id) => {
     setActiveCategory(id);
     setPinnedId(null);
-    setHoverId(null);
   };
 
-  const activeId = hoverId ?? pinnedId;
+  // panel pokazuje tylko wpis wybrany kliknięciem; hover jedynie podświetla
+  const activeId = pinnedId;
   const activeItem = activeId ? experienceItems.find((item) => item.id === activeId) : null;
 
   return (
@@ -153,7 +152,7 @@ export default function Experience() {
         <h1 className="section__title">Experience</h1>
         <p className="section__subtitle">
           My path through work, university and everything around game dev, drawn to scale.
-          Hover over a bar — or tap it — to see the details.
+          Click an entry on the timeline to see the details.
         </p>
       </div>
 
@@ -227,10 +226,6 @@ export default function Experience() {
                           left: item.left,
                           '--delay': `${index * 90}ms`,
                         }}
-                        onMouseEnter={() => setHoverId(item.id)}
-                        onMouseLeave={() => setHoverId(null)}
-                        onFocus={() => setHoverId(item.id)}
-                        onBlur={() => setHoverId(null)}
                         onPointerDown={(e) => {
                           if (e.button === 0) togglePin();
                         }}

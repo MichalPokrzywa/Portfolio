@@ -1368,16 +1368,22 @@
   transition: opacity 0.45s ease;
 }
 
-.tl-item:hover .tl-item__bar,
+/* hover: tylko delikatna poświata (zapowiedź);
+   pełne wypełnienie + pulsowanie dostaje wpis przypięty kliknięciem */
+
+.tl-item:hover .tl-item__bar::after,
+.tl-item:focus-visible .tl-item__bar::after,
+.tl-item:hover .tl-item__diamond::after,
+.tl-item:focus-visible .tl-item__diamond::after {
+  opacity: 0.35;
+}
+
 .tl-item.is-active .tl-item__bar,
-.tl-item:hover .tl-item__diamond,
 .tl-item.is-active .tl-item__diamond {
   background: var(--cat);
 }
 
-.tl-item:hover .tl-item__bar::after,
 .tl-item.is-active .tl-item__bar::after,
-.tl-item:hover .tl-item__diamond::after,
 .tl-item.is-active .tl-item__diamond::after {
   opacity: 1;
   animation: tlGlowPulse 1.8s ease-in-out 0.45s infinite;
@@ -1429,14 +1435,9 @@
   transition: opacity 0.3s ease-out;
 }
 
-.tl-panel::before {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  clip-path: var(--cut-md);
-  background: var(--surface);
-  z-index: 0;
-}
+/* powierzchnia siedzi na elemencie treści (nie na pseudo-elemencie):
+   rośnie razem z zawartością, więc przy wewnętrznym przewijaniu panelu
+   na mobile kolor kategorii nie wyłazi spod spodu */
 
 .tl-panel.is-open {
   opacity: 1;
@@ -1459,6 +1460,8 @@
   position: relative;
   z-index: 1;
   padding: 18px 18px 20px;
+  background: var(--surface);
+  clip-path: var(--cut-md);
   animation: fadeInUp 0.4s ease-out 0.1s backwards;
 }
 
@@ -1580,7 +1583,7 @@
     --panel-in-y: 22px;
   }
 
-  .tl-panel::before {
+  .tl-panel__content {
     background: rgba(9, 8, 13, 0.97);
     backdrop-filter: blur(14px);
   }
