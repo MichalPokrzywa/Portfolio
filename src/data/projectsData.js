@@ -2,6 +2,7 @@
 const projects = [
   {
     id: 'Nerd',
+    featured: true,
     title: 'Demo Nerd Simulator',
     shortDescription:
       'Indie game with absurd combination of a simulator and RPG. ',
@@ -25,6 +26,7 @@ const projects = [
   },
   {
     id: 'ss',
+    featured: true,
     title: 'Secret Seeker',
     shortDescription:
       'Indie game where a combination of roguelite, horror, pressure, and secrets that are better left untouched.',
@@ -47,6 +49,7 @@ const projects = [
   },
   {
     id: 'glitchReboot',
+    featured: true,
     title: 'Glitch Reboot',
     shortDescription:
       'Puzzle game using basic programming to fix glitching world together with spider buddy Buggy',

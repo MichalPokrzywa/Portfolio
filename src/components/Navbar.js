@@ -1,6 +1,7 @@
 // src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import Logo from './Logo';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,7 +19,7 @@ export default function Navbar() {
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
-          <span className="navbar__logo-circle">MP</span>
+          <Logo size={42} />
           <span className="navbar__brand-text">
             <span className="navbar__brand-name">Michał Pokrzywa</span>
             <span className="navbar__brand-role">Programmer</span>

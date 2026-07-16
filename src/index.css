@@ -13,9 +13,10 @@ body,
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #020617;
-  color: #e5e7eb;
+  font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background: #0a0810;
+  color: #f5f4fa;
   overflow-x: hidden;
 }
 
@@ -29,14 +30,178 @@ img {
   display: block;
 }
 
-/* canvas z shaderem w tle */
-.shader-bg {
+:focus-visible {
+  outline: 2px solid #c6ff33;
+  outline-offset: 2px;
+}
+
+/* ── Tło: fioletowa mgła + dryfujące techno-ornamenty ───────────────── */
+
+.city-bg {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.15;          /*  regulujesz intensywność tła */
-  mix-blend-mode:soft-light; /* możesz dać 'normal', jeśli ma być bardziej stonowane */
+  overflow: hidden;
+}
+
+.city-bg__glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+}
+
+.city-bg__glow--violet {
+  width: 62vw;
+  height: 62vw;
+  top: -22vw;
+  left: -14vw;
+  background: radial-gradient(circle, rgba(125, 57, 235, 0.3), transparent 65%);
+}
+
+.city-bg__glow--lime {
+  width: 46vw;
+  height: 46vw;
+  bottom: -26vw;
+  right: -14vw;
+  background: radial-gradient(circle, rgba(198, 255, 51, 0.08), transparent 65%);
+}
+
+/* warstwy ornamentów: kafelki SVG powtarzane i wolno przesuwane.
+   Ruch przez transform (kompozytor GPU) — animacja background-position
+   bywa nierysowana na warstwach fixed z maską. Maska siedzi na nieruchomym
+   wrapperze, więc "czyste" centrum nie jedzie razem z warstwą. */
+
+.city-bg__ornaments {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.city-bg__ornaments-inner {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0.25), #000 72%);
+  -webkit-mask-image: radial-gradient(circle at 50% 38%, rgba(0, 0, 0, 0.25), #000 72%);
+}
+
+/* gdy widać pasy boczne: ornamenty wygasają przy krawędziach,
+   żeby nie nakładały się na pasy podczas dryfu w bok */
+@media (min-width: 1500px) {
+  .city-bg__ornaments {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 180px,
+      #000 calc(100% - 180px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 180px,
+      #000 calc(100% - 180px),
+      transparent 100%
+    );
+  }
+}
+
+.city-bg__pattern {
+  position: absolute;
+  background-repeat: repeat;
+  will-change: transform;
+}
+
+.city-bg__pattern--a {
+  /* zapas jednego kafla nad górą: element zjeżdża w dół o pełny kafel i zapętla się */
+  inset: -720px 0 0 0;
+  opacity: 0.2;
+  background-size: 720px 720px;
+  animation: bgDriftDown 32s linear infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%237d39eb' stroke-width='2.5' opacity='.85'%3E%3Crect x='70' y='80' width='44' height='44' rx='10'/%3E%3Cpath d='M80 90 L104 114 M104 90 L80 114'/%3E%3C/g%3E%3Cg fill='none' stroke='%23c6ff33' stroke-width='2' opacity='.5'%3E%3Cpath d='M310 250 l14 14 l-14 14 l-14 -14 Z M346 250 l14 14 l-14 14 l-14 -14 Z M382 250 l14 14 l-14 14 l-14 -14 Z M418 250 l14 14 l-14 14 l-14 -14 Z'/%3E%3C/g%3E%3Cg stroke='%237d39eb' stroke-width='4' opacity='.7'%3E%3Cpath d='M500 446 l10 -16 M516 446 l10 -16 M532 446 l10 -16 M548 446 l10 -16 M564 446 l10 -16 M580 446 l10 -16'/%3E%3C/g%3E%3Cg fill='%23f5f4fa' opacity='.45'%3E%3Ccircle cx='120' cy='500' r='1.6'/%3E%3Ccircle cx='134' cy='500' r='1.6'/%3E%3Ccircle cx='148' cy='500' r='1.6'/%3E%3Ccircle cx='162' cy='500' r='1.6'/%3E%3Ccircle cx='120' cy='514' r='1.6'/%3E%3Ccircle cx='134' cy='514' r='1.6'/%3E%3Ccircle cx='148' cy='514' r='1.6'/%3E%3Ccircle cx='162' cy='514' r='1.6'/%3E%3Ccircle cx='120' cy='528' r='1.6'/%3E%3Ccircle cx='134' cy='528' r='1.6'/%3E%3Ccircle cx='148' cy='528' r='1.6'/%3E%3Ccircle cx='162' cy='528' r='1.6'/%3E%3C/g%3E%3Cg fill='none' stroke='%237d39eb' stroke-width='2' opacity='.8'%3E%3Ccircle cx='560' cy='150' r='24'/%3E%3Cpath d='M560 118 v10 M560 172 v10 M528 150 h10 M582 150 h10'/%3E%3C/g%3E%3Ccircle cx='560' cy='150' r='3' fill='%23c6ff33' opacity='.8'/%3E%3Cpath d='M60 640 H300' stroke='%237d39eb' stroke-width='1' opacity='.4'/%3E%3Crect x='300' y='636' width='8' height='8' fill='%237d39eb' opacity='.5'/%3E%3Cg fill='none' stroke='%23c6ff33' stroke-width='2' opacity='.5'%3E%3Crect x='636' y='596' width='26' height='26' rx='7'/%3E%3Cpath d='M642 602 l14 14 M656 602 l-14 14'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.city-bg__pattern--b {
+  /* zapas kafla z prawej: element jedzie w lewo o pełny kafel */
+  inset: 0 -480px 0 0;
+  opacity: 0.16;
+  background-size: 480px 480px;
+  animation: bgDriftSide 26s linear infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480' viewBox='0 0 480 480'%3E%3Cg stroke='%23c6ff33' stroke-width='3' opacity='.55'%3E%3Cpath d='M60 76 l12 -20 M78 76 l12 -20 M96 76 l12 -20 M114 76 l12 -20'/%3E%3C/g%3E%3Cg fill='%23c6ff33' opacity='.5'%3E%3Ccircle cx='240' cy='140' r='2'/%3E%3Ccircle cx='256' cy='140' r='2'/%3E%3Ccircle cx='272' cy='140' r='2'/%3E%3Ccircle cx='288' cy='140' r='2'/%3E%3Ccircle cx='304' cy='140' r='2'/%3E%3Ccircle cx='320' cy='140' r='2'/%3E%3C/g%3E%3Cg fill='none' stroke='%23f5f4fa' stroke-width='2' opacity='.5'%3E%3Cpath d='M330 300 h-18 v18 M376 346 h18 v-18'/%3E%3C/g%3E%3Cpath d='M150 348 l12 12 l-12 12 l-12 -12 Z' fill='none' stroke='%23c6ff33' stroke-width='2' opacity='.6'/%3E%3Cpath d='M420 80 V220' stroke='%237d39eb' stroke-width='1.5' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* pionowe pasy przy krawędziach ekranu (chevrony, ukośne pasy, łańcuch X) —
+   widoczne tylko tam, gdzie obok treści jest puste miejsce */
+
+.city-bg__edge {
+  position: absolute;
+  width: 120px;
+  display: none;
+  background-repeat: repeat-y;
+  background-size: 120px 360px;
+  opacity: 0.24;
+  will-change: transform;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='360' viewBox='0 0 120 360'%3E%3Cg fill='none' stroke='%23c6ff33' stroke-width='5' opacity='.8'%3E%3Cpath d='M16 16 L36 36 L56 16'/%3E%3Cpath d='M16 44 L36 64 L56 44'/%3E%3Cpath d='M16 72 L36 92 L56 72'/%3E%3C/g%3E%3Cg stroke='%237d39eb' stroke-width='4' opacity='.85'%3E%3Cpath d='M82 196 l26 -14 M82 214 l26 -14 M82 232 l26 -14 M82 250 l26 -14 M82 268 l26 -14'/%3E%3C/g%3E%3Cg fill='none' stroke='%23f5f4fa' stroke-width='2' opacity='.5'%3E%3Cpath d='M36 258 l10 10 l-10 10 l-10 -10 Z M36 294 l10 10 l-10 10 l-10 -10 Z M36 330 l10 10 l-10 10 l-10 -10 Z'/%3E%3C/g%3E%3Cpath d='M96 20 V120' stroke='%237d39eb' stroke-width='1.5' opacity='.55'/%3E%3Crect x='90' y='128' width='12' height='12' fill='none' stroke='%23c6ff33' stroke-width='2' opacity='.6'/%3E%3C/svg%3E");
+}
+
+.city-bg__edge--left {
+  left: 12px;
+  top: -360px;
+  bottom: 0;
+  animation: edgeDriftDown 22s linear infinite;
+}
+
+/* prawy pas: własny kafelek — strzałki w górę (zgodnie z kierunkiem ruchu)
+   i inne motywy niż po lewej: plusy, tarcza, poziome kreski, trójkąt */
+.city-bg__edge--right {
+  right: 12px;
+  top: 0;
+  bottom: -360px;
+  animation: edgeDriftUp 28s linear infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='360' viewBox='0 0 120 360'%3E%3Cg fill='none' stroke='%23c6ff33' stroke-width='5' opacity='.8'%3E%3Cpath d='M16 40 L36 20 L56 40'/%3E%3Cpath d='M16 68 L36 48 L56 68'/%3E%3Cpath d='M16 96 L36 76 L56 96'/%3E%3C/g%3E%3Cg stroke='%237d39eb' stroke-width='3' opacity='.85'%3E%3Cpath d='M85 50 h20 M95 40 v20'/%3E%3Cpath d='M85 98 h20 M95 88 v20'/%3E%3C/g%3E%3Cg fill='none' stroke='%237d39eb' stroke-width='2' opacity='.8'%3E%3Ccircle cx='36' cy='170' r='16'/%3E%3C/g%3E%3Ccircle cx='36' cy='170' r='3' fill='%23c6ff33' opacity='.85'/%3E%3Cg stroke='%237d39eb' stroke-width='4' opacity='.75'%3E%3Cpath d='M78 162 h30 M78 176 h30 M78 190 h30'/%3E%3C/g%3E%3Cg fill='%23f5f4fa' opacity='.5'%3E%3Ccircle cx='100' cy='240' r='1.8'/%3E%3Ccircle cx='100' cy='258' r='1.8'/%3E%3Ccircle cx='100' cy='276' r='1.8'/%3E%3Ccircle cx='100' cy='294' r='1.8'/%3E%3Ccircle cx='100' cy='312' r='1.8'/%3E%3C/g%3E%3Cpath d='M36 244 l14 24 h-28 Z' fill='none' stroke='%23c6ff33' stroke-width='2' opacity='.6'/%3E%3Cpath d='M20 320 v16 h16' fill='none' stroke='%23f5f4fa' stroke-width='2' opacity='.5'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 1500px) {
+  .city-bg__edge {
+    display: block;
+  }
+}
+
+@keyframes edgeDriftDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(360px);
+  }
+}
+
+@keyframes edgeDriftUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-360px);
+  }
+}
+
+@keyframes bgDriftDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(720px);
+  }
+}
+
+@keyframes bgDriftSide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-480px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
 }

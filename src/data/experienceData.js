@@ -6,9 +6,9 @@
 
 export const experienceCategories = [
   { id: 'all', label: 'All' },
-  { id: 'work', label: 'Work', color: '#915eff' },
-  { id: 'education', label: 'Education', color: '#38bdf8' },
-  { id: 'activity', label: 'Activities', color: '#f472b6' },
+  { id: 'work', label: 'Work', color: '#7d39eb' },
+  { id: 'education', label: 'Education', color: '#f5f4fa' },
+  { id: 'activity', label: 'Activities', color: '#c6ff33' },
 ];
 
 export const experienceItems = [

@@ -38,7 +38,7 @@ export default function Contact() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!capVal) {
+    if (siteKey && !capVal) {
       setCaptchaError('Please confirm you are not a robot.');
       return;
     }
@@ -108,30 +108,34 @@ export default function Contact() {
               required
             />
           </label>
-          <div style={{ margin: '8px 0px 8px' }}>
-            <ReCAPTCHA
-              sitekey={siteKey}
-              onChange={(val) => {
-                setCapVal(val);
-                setCaptchaError('');
-              }}
-            />
-            {captchaError && (
-              <p style={{ marginTop: '6px', color: '#f97373', fontSize: '0.85rem' }}>
-                {captchaError}
-              </p>
-            )}
-          </div>
+          {/* bez skonfigurowanego klucza ReCAPTCHA wywala całą stronę,
+              więc renderujemy ją tylko gdy REACT_APP_RECAPTCHA_SITE_KEY istnieje */}
+          {siteKey && (
+            <div style={{ margin: '8px 0px 8px' }}>
+              <ReCAPTCHA
+                sitekey={siteKey}
+                onChange={(val) => {
+                  setCapVal(val);
+                  setCaptchaError('');
+                }}
+              />
+              {captchaError && (
+                <p style={{ marginTop: '6px', color: '#f97373', fontSize: '0.85rem' }}>
+                  {captchaError}
+                </p>
+              )}
+            </div>
+          )}
           <button
             type="submit"
             className="btn btn--primary btn--full"
-            disabled={status === 'sending' || !capVal}
+            disabled={status === 'sending' || (siteKey && !capVal)}
           >
             {status === 'sending' ? 'Sending...' : 'Send Message'}
           </button>
 
           {status === 'success' && (
-            <p style={{ marginTop: '10px', color: '#4ade80', fontSize: '0.9rem' }}>
+            <p style={{ marginTop: '10px', color: '#c6ff33', fontSize: '0.9rem' }}>
               ✅ A Message has been send. Thank you!
             </p>
           )}
